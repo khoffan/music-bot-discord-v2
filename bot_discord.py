@@ -1,7 +1,6 @@
 import discord
 import yt_dlp as youtube_dl
 from discord.ext import commands
-import os
 import asyncio
 
 intents = discord.Intents().all()
@@ -56,8 +55,6 @@ class YTDLSource(discord.PCMVolumeTransformer):
 @bot.event
 async def on_ready():
     print("Bot is ready!")
-
-
 
 
 @bot.event
@@ -160,4 +157,4 @@ async def stop(ctx):
 
 
 if __name__ == "__main__":
-    bot.run("MTI5MzgzNDQ3NTkwOTY3NzE1Nw.G-iYmO.CjvQ0xgaF05G-qGNYDWUdAtcWgcdlxYWX-8-QA")
+    bot.run("your-token-here")
