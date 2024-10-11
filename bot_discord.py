@@ -1,10 +1,26 @@
 import discord
+from datetime import datetime
 import yt_dlp as youtube_dl
-from discord.ext import commands
+from discord.ext import commands, tasks
 import asyncio
+
 
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+notify_times = [5,6,7,8, 9, 10, 11, 12, 15, 17, 19]
+
+@tasks.loop(minutes=1)
+async def check_notify_message():
+    now = datetime.now()
+    # current_hour = now.hour
+    current_minute = now.minute
+
+    # ตรวจสอบว่าตอนนี้อยู่ในช่วงเวลาที่กำหนดหรือไม่
+    if current_minute in notify_times:
+        channel = bot.get_channel(1101501209015222344)
+        print(channel)# เปลี่ยน YOUR_CHANNEL_ID เป็น ID ของช่องที่ต้องการ
+        await channel.send(f'🔔 แจ้งเตือน: ตอนนี้เป็นเวลา {now.strftime("%H:%M")}')
 
 song_queue = []
 
@@ -55,6 +71,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 @bot.event
 async def on_ready():
     print("Bot is ready!")
+    check_notify_message.start()
 
 
 @bot.event
